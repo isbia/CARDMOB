@@ -5,10 +5,13 @@ import './App.css'
 
 import Counter from './components/Counter'
 import Photo from './components/Photo'
+import Album from './components/Album'
+import TodoList from './components/TodoList'
 
 function App() {
   const [count, setCount] = useState(0);
   const [photos, setPhotos] = useState([]);
+  const [albumId, setAlbumId] = useState(1);
 
   const fetchPhotos = async () => {
     try {
@@ -37,7 +40,8 @@ function App() {
 
   return (
     <>
-      <Counter title="Contador 1"/>
+    <TodoList name="CARDMOB"/>
+      <Counter title="Contando..."/>
       <Counter initial="180"/>
       <article>
         <h1>Album da API</h1>
@@ -49,6 +53,15 @@ function App() {
           <Photo photo={photo}/>
         ) )}
       </article>
+
+      <div>
+        <button onClick={() => setAlbumId(1)}>Album #1</button>
+        <button onClick={() => setAlbumId(2)}>Album #2</button>
+        <button onClick={() => setAlbumId(3)}>Album #3</button>
+        <button onClick={() => setAlbumId(4)}>Album #4</button>
+      </div>
+
+      <Album albumId={albumId}/>
     </>
   )
 }
