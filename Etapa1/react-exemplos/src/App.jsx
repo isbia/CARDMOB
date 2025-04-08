@@ -21,6 +21,7 @@ function App() {
       if (response.status === 200) {
         const data = await response.json();
         //console.log(data);
+        // correção da imagem thumb
         const updatePhotos = data.map( (photo) => ({
           ...photo,
           thumbnailUrl: `https://picsum.photos/150?random=${photo.id}`
@@ -38,12 +39,32 @@ function App() {
     fetchPhotos();
   }, []);
 
+  const updateCount = () => {
+    // outros comandos
+    return count +1;
+  }
+
+  const updateCount1 = () => count +1;
+
+  const dados = {
+    "nome": "fulano",
+    "atualiza": (novo_nome) => `Nome none é ${novo_nome}`,
+    "endereco": {
+      "rua": "xyz",
+      "numero": "111",
+      "complemento": ["casa", "na esquina do supermercado ABC"]
+    }
+
+  }; // é um objeto JS
+  dados.atualiza("gerson");
+  dados.endereco.complemento[1]; 
+
   return (
     <>
     <TodoList name="CARDMOB"/>
       <Counter title="Contando..."/>
       <Counter initial="180"/>
-      <article>
+      {/* <article>
         <h1>Album da API</h1>
         {photos.map( (photo) => (
           // <article key={photo.id}>
@@ -52,7 +73,7 @@ function App() {
           // </article>
           <Photo photo={photo}/>
         ) )}
-      </article>
+      </article> */}
 
       <div>
         <button onClick={() => setAlbumId(1)}>Album #1</button>
