@@ -2,10 +2,13 @@ import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 //import { useNavigation } from "@react-navigation/native"
 import { useTheme } from '../contexts/ThemeContext'; // Nova
+import { useAuth } from "../contexts/AuthContext";
 
 function HomeScreen ({ navigation }: any) {
     //const navigation = useNavigation();
     const { theme, toggleTheme } = useTheme();
+    const { login } = useAuth();
+
     return (
         <View style={[styles.container, {backgroundColor: theme.colors.background}]}>
             <Text style={{color: theme.colors.text, marginBottom: theme.spacing(1) }}>
@@ -15,6 +18,7 @@ function HomeScreen ({ navigation }: any) {
                 onPress={toggleTheme}/>
                 <Button title="Ir para detalhes" onPress={ () => navigation.navigate('Details')}/>
                 <Button title="Login" onPress={ () => navigation.navigate ('Login')} />
+                <Button title="Fake Login" onPress={ () => login('fake_toten')}/>
         </View>
     );
 }
