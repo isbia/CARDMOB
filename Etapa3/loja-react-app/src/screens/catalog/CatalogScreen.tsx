@@ -1,43 +1,59 @@
-import React, { useContext } from "react";
-import { View, Text, FlatList, StyleSheet} from 'react-native';
+import React, { useContext, useState, useEffect } from "react";
+import { View, FlatList, StyleSheet, Text } from 'react-native';
 
 import CatalogCard from "./CatalogCard";
 
 // Todo: importar o serviço de recuperação do catalog
+import { getCatalog } from "../../services/CatalogServices";
 
 const CatalogScreen = ({navigation} : any) => {
+    const [catalog, setCatalog] = useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchCatalog = async () => {
+            try {
+                const data = await getCatalog();
+                setCatalog(data);
+            }
+            catch (error) {
+                console.error('Erro ao buscar o catálogo', error);
+            }
+        };
+        fetchCatalog();
+        console.log(catalog);
+    }, []);
 
     const handleBuyPress = (product : any) => {
         // 1 - Adicionar ao carrinho
-        // 2 - Ir para a tela do carrinho
+        // 2 - ir para a tela do carrinho
         console.log(product);
     };
 
-    const renderItem = ({ product }: any) => (
-        <CatalogCard 
-            product={product}
-            onBuyPress={() => handleBuyPress(product)}
+    const renderItem = ({ item } : any) => (
+        <CatalogCard
+            product={item}
+            onBuyPress={() => handleBuyPress(item)}
         />
     );
 
     return (
         <View style={styles.container}>
             <Text>Menu</Text>
-            <FlatList 
-                data={[]}
-                renderItem={renderItem}
-                keyExtractor={(item: any) => item.id}
+            <FlatList
+            data={catalog}
+            renderItem={renderItem}
+            keyExtractor={(item: any) => item.id.toString()}
             />
         </View>
     );
 };
-
+    
 export default CatalogScreen;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        padding: 15,
-        backgroundColor: '#F8F8F8',
-    }
+    flex: 1,
+    padding: 15,
+    backgroundColor: '#f5f5f5',
+    },
 });
